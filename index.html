@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honda Civic 2012 | Premium Listing</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: #fff;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 22px;
+    color: #00c853;
+}
+
+.main-image {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnails img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.thumbnails img.active {
+    opacity: 1;
+    border: 2px solid #00c853;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.section-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.specs, .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.spec, .feature {
+    background: #111;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.highlight {
+    background: #002d14;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.bid-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #111;
+    color: white;
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.whatsapp {
+    background: #25D366;
+}
+
+.call {
+    background: #007bff;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+@media(max-width: 900px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="title">Honda Civic 2012 (Maroon)</div>
+        <div class="price">₵ Negotiable</div>
+    </div>
+
+    <img id="mainImage" class="main-image" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d">
+
+    <div class="thumbnails" id="thumbs">
+        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d" onclick="setImage(0)" class="active">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70" onclick="setImage(1)">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7" onclick="setImage(2)">
+    </div>
+
+    <div class="content">
+
+        <!-- LEFT -->
+        <div class="card">
+
+            <div class="section-title">Vehicle Overview</div>
+
+            <div class="specs">
+                <div class="spec">Make: Honda</div>
+                <div class="spec">Model: Civic</div>
+                <div class="spec">Year: 2012</div>
+                <div class="spec">Mileage: 106,000 km</div>
+                <div class="spec">Transmission: Automatic</div>
+                <div class="spec">Engine: 1.8L</div>
+                <div class="spec">Condition: Second</div>
+                <div class="spec">Usage: Local Used</div>
+                <div class="spec">Color: Maroon</div>
+                <div class="spec">Interior: Black</div>
+                <div class="spec">Registered: Yes</div>
+                <div class="spec">Exchange: No</div>
+            </div>
+
+            <div class="section-title" style="margin-top:20px;">Key Features</div>
+
+            <div class="features">
+                <div class="feature">Air Conditioning</div>
+                <div class="feature">AM/FM Radio</div>
+                <div class="feature">Electric Windows</div>
+                <div class="feature">Airbags</div>
+                <div class="feature">Alloy Wheels</div>
+                <div class="feature">Cruise Control</div>
+                <div class="feature">Armrests</div>
+                <div class="feature">Key Start</div>
+            </div>
+
+            <div class="highlight">
+                ✔ Free full tank included<br>
+                ✔ Just buy & drive<br>
+                ✔ Smooth sale guaranteed<br>
+                ✔ Original parts intact
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="card bid-box">
+
+            <div class="section-title">Make an Offer</div>
+
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="number" id="bid" placeholder="Your Offer (₵)">
+
+            <button class="btn whatsapp" onclick="sendBid()">Send via WhatsApp</button>
+
+            <button class="btn call" onclick="callDealer()">Call Dealer</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const images = [
+    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d",
+    "https://images.unsplash.com/photo-1503376780353-7e6692767b70",
+    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7"
+];
+
+let currentIndex = 0;
+
+function setImage(index) {
+    currentIndex = index;
+    document.getElementById("mainImage").src = images[index];
+    updateThumbs();
+}
+
+function updateThumbs() {
+    document.querySelectorAll("#thumbs img").forEach((img, i) => {
+        img.classList.toggle("active", i === currentIndex);
+    });
+}
+
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % images.length;
+    setImage(currentIndex);
+}, 5000);
+
+function sendBid() {
+    const name = document.getElementById("name").value;
+    const bid = document.getElementById("bid").value;
+
+    if (!name || !bid) {
+        alert("Please complete all fields");
+        return;
+    }
+
+    const phone = "233245793022";
+
+    const message = `Hello, I'm ${name}. I want to offer ₵${bid} for the Honda Civic 2012 (Maroon, 106,000km, Automatic).`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+}
+
+function callDealer() {
+    window.location.href = "tel:0245793022";
+}
+</script>
+
+</body>
+</html>
