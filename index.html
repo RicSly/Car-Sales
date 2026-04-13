@@ -40,7 +40,13 @@ body {
     color: #00c853;
 }
 
-/* MAIN IMAGE FRAME (UPDATED) */
+.location {
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+/* MAIN IMAGE */
 .main-image-wrapper {
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -50,14 +56,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .main-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* KEY FIX */
-    transition: opacity 0.4s ease;
+    object-fit: contain;
 }
 
 /* Thumbnails */
@@ -82,6 +86,7 @@ body {
     border: 2px solid #00c853;
 }
 
+/* Layout */
 .content {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -120,6 +125,7 @@ body {
     margin-top: 15px;
 }
 
+/* Bid Box */
 .bid-box input {
     width: 100%;
     padding: 12px;
@@ -128,6 +134,15 @@ body {
     border-radius: 6px;
     background: #111;
     color: white;
+}
+
+.bid-counter {
+    background: #111;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #ccc;
 }
 
 /* Buttons */
@@ -166,11 +181,13 @@ body {
 <div class="container">
 
     <div class="header">
-        <div class="title">Honda Civic 2012 (Maroon)</div>
+        <div>
+            <div class="title">Honda Civic 2012 (Maroon)</div>
+            <div class="location">📍 East Legon, Greater Accra, Ghana</div>
+        </div>
         <div class="price">GH₵ 99,000 "Negotiable"</div>
     </div>
 
-    <!-- UPDATED IMAGE WRAPPER -->
     <div class="main-image-wrapper">
         <img id="mainImage" class="main-image" src="cr.jpeg">
     </div>
@@ -235,6 +252,11 @@ body {
 
             <div class="section-title">Make an Offer</div>
 
+            <!-- LIVE BID COUNTER -->
+            <div class="bid-counter">
+                🔥 <span id="bidCount">0</span> people have placed offers
+            </div>
+
             <input type="text" id="name" placeholder="Full Name">
             <input type="number" id="bid" placeholder="Your Offer (₵)">
 
@@ -249,14 +271,8 @@ body {
 
 <script>
 const images = [
-    "cr.jpeg",
-    "cr1.jpeg",
-    "cr2.jpeg",
-    "cr3.jpeg",
-    "cr4.jpeg",
-    "cr5.jpeg",
-    "cr6.jpeg",
-    "cr7.jpeg"
+    "cr.jpeg","cr1.jpeg","cr2.jpeg","cr3.jpeg",
+    "cr4.jpeg","cr5.jpeg","cr6.jpeg","cr7.jpeg"
 ];
 
 let currentIndex = 0;
@@ -278,6 +294,32 @@ setInterval(() => {
     setImage(currentIndex);
 }, 5000);
 
+/* BID COUNTER LOGIC */
+function updateBidCounter() {
+    let count = localStorage.getItem("bidCount");
+    let lastUpdate = localStorage.getItem("lastUpdate");
+
+    if (!count) count = 12; // starting number
+    if (!lastUpdate) lastUpdate = Date.now();
+
+    const now = Date.now();
+    const hoursPassed = (now - lastUpdate) / (1000 * 60 * 60);
+
+    if (hoursPassed >= 4) {
+        const increments = Math.floor(hoursPassed / 4);
+        for (let i = 0; i < increments; i++) {
+            count = parseInt(count) + (Math.random() < 0.5 ? 1 : 2);
+        }
+        localStorage.setItem("lastUpdate", now);
+    }
+
+    localStorage.setItem("bidCount", count);
+    document.getElementById("bidCount").innerText = count;
+}
+
+updateBidCounter();
+
+/* ACTIONS */
 function sendBid() {
     const name = document.getElementById("name").value;
     const bid = document.getElementById("bid").value;
@@ -288,7 +330,6 @@ function sendBid() {
     }
 
     const phone = "233245793022";
-
     const message = `Hello, I'm ${name}. I want to offer ₵${bid} for the Honda Civic 2012 (Maroon, 106,000km, Automatic).`;
 
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
